@@ -5,4 +5,5 @@ package com.dongyuzheng.helpinghand;
  */
 public class GlobalVariables {
     static String api_token = "";
+    static String url = "http://45.79.163.119/";
 }

@@ -17,9 +17,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
+    public String get_token_from_web(){
+        return "sdnasle21l3n12l";
+    }
+
     public void onLoginClick(View v) {
 
-        String token = GlobalVariables.api_token;
+        String token = get_token_from_web();
+        GlobalVariables.api_token = token;
+
+        System.out.println(token);
+        System.out.println(GlobalVariables.api_token);
 
         if (token.equals("bad_login")) {
             CharSequence text = "Incorrect username or password.";

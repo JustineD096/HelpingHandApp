@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String token = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +18,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View v) {
+
+        String token = GlobalVariables.api_token;
+
         if (token.equals("bad_login")) {
             CharSequence text = "Incorrect username or password.";
             Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);

@@ -2,12 +2,16 @@ package com.dongyuzheng.helpinghand;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -15,19 +19,35 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     public String get_token_from_web(){
-        return "sdnasle21l3n12l";
+        EditText user = (EditText)findViewById(R.id.editText);
+        EditText pwd = (EditText)findViewById(R.id.editText2);
+        String username = user.getText().toString();
+        String password = pwd.getText().toString();
+
+        HashMap<String,String> hm0 = new HashMap<String,String>();
+        hm0.put("username", username);
+        hm0.put("password", password);
+
+        HashMap<String,String> hm = new HashMap<String,String>();
+
+        // TO-DO: CHECK IF BAD LOGIN VS BAD CONNECTION
+        try {
+            return HttpFactory.POST("http://45.79.163.119/api/get-token/", hm0, hm).getString("token");
+        }
+        catch (Exception e){
+            return "bad_login";
+        }
     }
 
     public void onLoginClick(View v) {
 
         String token = get_token_from_web();
         GlobalVariables.api_token = token;
-
-        System.out.println(token);
-        System.out.println(GlobalVariables.api_token);
 
         if (token.equals("bad_login")) {
             CharSequence text = "Incorrect username or password.";

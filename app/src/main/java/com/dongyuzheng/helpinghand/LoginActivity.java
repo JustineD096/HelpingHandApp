@@ -1,21 +1,38 @@
 package com.dongyuzheng.helpinghand;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
+
+    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-    public void onClick(View v) {
-        startActivity(new Intent(this, MainActivity.class));
+
+    public void onLoginClick(View v) {
+        if (token.equals("bad_login")) {
+            CharSequence text = "Incorrect username or password.";
+            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else if (token.equals("bad_connection")) {
+            CharSequence text = "Bad connection to server.";
+            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else {
+            startActivity(new Intent(this, MainActivity.class));
+        }
     }
 
     @Override
